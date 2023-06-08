@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Transform))]
+
 public class MoveEnemy : MonoBehaviour
 {
     [SerializeField] private Transform _path;
@@ -11,7 +13,7 @@ public class MoveEnemy : MonoBehaviour
     private Transform[] _points;
     private int _currentPoint = 0;
 
-    void Awake()
+    private void Start()
     {
         _spriteRenderer= GetComponent<SpriteRenderer>();
         _points= new Transform[_path.childCount];
@@ -22,7 +24,7 @@ public class MoveEnemy : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         Transform target = _points[_currentPoint];
         transform.position = Vector3.MoveTowards(transform.position, target.position, _speed * Time.deltaTime);

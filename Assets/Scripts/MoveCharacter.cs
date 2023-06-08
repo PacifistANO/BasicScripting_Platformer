@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
+
 public class MoveCharacter : MonoBehaviour
 {
     [SerializeField] private float _speed;
@@ -29,35 +30,35 @@ public class MoveCharacter : MonoBehaviour
         {
             transform.Translate(_speed * Time.deltaTime, 0, 0);
             _spriteRenderer.flipX = false;
-            _animator.SetTrigger("RunTrigger");
+            _animator.SetTrigger(CharacterAnimatorController.Triggers.RunTrigger);
         }
 
         if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
         {
-            _animator.ResetTrigger("RunTrigger");
-            _animator.SetTrigger("IdleTrigger");
+            _animator.ResetTrigger(CharacterAnimatorController.Triggers.RunTrigger);
+            _animator.SetTrigger(CharacterAnimatorController.Triggers.IdleTrigger);
         }
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             transform.Translate(-_speed * Time.deltaTime, 0, 0);
             _spriteRenderer.flipX = true;
-            _animator.SetTrigger("RunTrigger");
+            _animator.SetTrigger(CharacterAnimatorController.Triggers.RunTrigger);
         }
 
         if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            _animator.ResetTrigger("RunTrigger");
-            _animator.SetTrigger("IdleTrigger");
+            _animator.ResetTrigger(CharacterAnimatorController.Triggers.RunTrigger);
+            _animator.SetTrigger(CharacterAnimatorController.Triggers.IdleTrigger);
         }
-    }
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _animator.SetTrigger("JumpTrigger");
-            _rigidbody2D.AddForce(_jumpForce * Vector2.up);
+            if(_rigidbody2D.velocity.y == 0)
+            {
+                _animator.SetTrigger(CharacterAnimatorController.Triggers.JumpTrigger);
+                _rigidbody2D.AddForce(_jumpForce * Vector2.up);
+            }
         }
     }
 
@@ -66,11 +67,6 @@ public class MoveCharacter : MonoBehaviour
         if (collision.collider.TryGetComponent<MoveEnemy>(out MoveEnemy moveEnemy))
         {
             transform.position = new Vector3(6.7f, 1.94f);
-        }
-
-        if (collision.collider.TryGetComponent<CircleCollider2D>(out CircleCollider2D circleCollider2D))
-        {
-            collision.gameObject.SetActive(false);
         }
     }
 }
