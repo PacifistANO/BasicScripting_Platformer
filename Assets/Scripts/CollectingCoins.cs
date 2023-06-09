@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Text))]
-
 public class CollectingCoins : MonoBehaviour
 {
     [SerializeField] private Text _coinsView;

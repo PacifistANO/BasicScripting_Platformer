@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Transform))]
+[RequireComponent (typeof(SpriteRenderer))]
 
 public class MoveEnemy : MonoBehaviour
 {

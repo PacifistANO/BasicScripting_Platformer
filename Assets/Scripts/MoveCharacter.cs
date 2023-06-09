@@ -15,13 +15,15 @@ public class MoveCharacter : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private Rigidbody2D _rigidbody2D;
-
+    private Vector3 _startPosition;
     private void Awake()
     {
         Debug.Log("Move - A,D | LeftArrow, RightArrow \nJump - Space | Jump only if you stay on ground");
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
+        _startPosition = new Vector3(6.7f, 1.94f);
+        transform.position = _startPosition;
     }
 
     void Update()
@@ -66,7 +68,7 @@ public class MoveCharacter : MonoBehaviour
     {
         if (collision.collider.TryGetComponent<MoveEnemy>(out MoveEnemy moveEnemy))
         {
-            transform.position = new Vector3(6.7f, 1.94f);
+            transform.position = _startPosition;
         }
     }
 }
